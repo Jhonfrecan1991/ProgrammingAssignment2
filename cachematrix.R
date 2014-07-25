@@ -3,13 +3,31 @@
 
 ## Write a short comment describing this function
 
-makeCacheMatrix <- function(x = matrix()) {
-
+makeCacheMatrix<- function(X = matrix()) {
+  inv <- NULL
+  Matrix <- function(Y) {
+    X <<- Y
+    inv <<- NULL
+  }
+  Mat <- function() X
+  Inversa <- function(solve) inv <<- solve
+  Inver <- function() inv
+  list(Mtatrix = Matrix, Mat = Mat, Inversa = Inversa, Inver = Inver)
 }
 
 
 ## Write a short comment describing this function
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve <- function(X) {
+  inv <- X$Inver()
+  if(identical(inv, solve(X$Mat()))) {
+    message("Obtención de inversa en caché")
+    return(inv)
+  }
+  else{
+    Matr <- X$Mat()
+    inv <- solve(Matr)
+    X$Inversa(inv)
+    return(inv)
+  }
 }
